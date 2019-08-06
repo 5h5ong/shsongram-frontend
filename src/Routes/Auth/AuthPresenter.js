@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Input from '../Components/Input';
-import Button from '../Components/Button';
-import useInput from '../Hooks/useInput';
+import Input from '../../Components/Input';
+import Button from '../../Components/Button';
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -43,21 +42,23 @@ const Form = styled(Box)`
   }
 `;
 
-export default () => {
-  const [action, setAction] = useState('logIn');
-  const firstName = useInput('');
-  const lastName = useInput('');
-  const email = useInput('');
-  const username = useInput('');
-  const password = useInput('');
-
+export default ({
+  firstName,
+  lastName,
+  email,
+  username,
+  password,
+  action,
+  setAction,
+  onLogin
+}) => {
   return (
     <Wrapper>
       <Form>
         {action === 'logIn' ? (
-          <form>
-            <Input placeholder={'Username'} {...username} />
-            <Input placeholder={'Password'} {...password} type='password' />
+          <form onSubmit={onLogin}>
+            <Input placeholder={'email'} {...email} />
+            {/* <Input placeholder={'Password'} {...password} type='password' /> */}
             <Button text={'Log In'} />
           </form>
         ) : (
