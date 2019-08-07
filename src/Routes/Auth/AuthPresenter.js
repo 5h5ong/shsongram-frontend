@@ -50,24 +50,25 @@ export default ({
   password,
   action,
   setAction,
-  onLogin
+  onSubmit
 }) => {
+  console.log({ ...firstName });
   return (
     <Wrapper>
       <Form>
         {action === 'logIn' ? (
-          <form onSubmit={onLogin}>
-            <Input placeholder={'email'} {...email} />
+          <form onSubmit={onSubmit}>
+            <Input placeholder={'email'} {...email} type='email' />
             {/* <Input placeholder={'Password'} {...password} type='password' /> */}
             <Button text={'Log In'} />
           </form>
         ) : (
-          <form>
-            <Input placeholder={'First name'} {...firstName} />
-            <Input placeholder={'Last name'} {...lastName} />
+          <form onSubmit={onSubmit}>
+            <Input placeholder={'First name'} {...firstName} required={false} />
+            <Input placeholder={'Last name'} {...lastName} required={false} />
             <Input placeholder={'Email'} {...email} type='email' />
             <Input placeholder={'Username'} {...username} />
-            <Input placeholder={'Password'} {...password} type='password' />
+            {/* <Input placeholder={'Password'} {...password} type='password' /> */}
             <Button text={'Sign Up'} />
           </form>
         )}
@@ -81,7 +82,7 @@ export default ({
         ) : (
           <>
             Have an account?{' '}
-            <Link onClick={() => setAction('SignUp')}>Sign Up</Link>
+            <Link onClick={() => setAction('logIn')}>Log In</Link>
           </>
         )}
       </StateChanger>
