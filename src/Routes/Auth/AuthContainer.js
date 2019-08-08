@@ -3,7 +3,12 @@ import { useMutation } from 'react-apollo-hooks';
 import { toast } from 'react-toastify';
 import useInput from '../../Hooks/useInput';
 import AuthPresenter from '../Auth/AuthPresenter';
-import { LOGIN, CREATE_ACCOUNT } from './AuthQueries';
+import {
+  LOGIN,
+  CREATE_ACCOUNT,
+  CONFIRM_SECRET,
+  LOCAL_USER_IN
+} from './AuthQueries';
 
 export default () => {
   const [action, setAction] = useState('logIn');
@@ -24,6 +29,10 @@ export default () => {
       lastName: lastName.value
     }
   });
+  const [confirmSecretMutation] = useMutation(CONFIRM_SECRET, {
+    variables: { secret: secret.value, email: email.value }
+  });
+  const [localLogInMutation] = useMutation(LOCAL_USER_IN);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -67,6 +76,21 @@ export default () => {
           }
         } catch (e) {
           toast.error(e.message);
+        }
+      }
+    } else if (action === 'confirm') {
+      if (secret.value !== '') {
+        try {
+          const {
+            data: { confirmSecret: token }
+          } = await confirmSecretMutation();
+          if (token !== '' && token !== undefined) {
+            localLogInMutation({ variables: { token } });
+          } else {
+            throw Error();
+          }
+        } catch {
+          toast.error('secret key를 인증할 수 없습니다. 다시 확인해주세요.');
         }
       }
     }

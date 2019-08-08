@@ -81,22 +81,25 @@ export default ({
               required
               {...secret}
             />
+            <Button text={'Confirm'} />
           </form>
         )}
       </Form>
-      <StateChanger>
-        {action === 'logIn' ? (
-          <>
-            Don't have an account?{' '}
-            <Link onClick={() => setAction('signUp')}>Sign Up</Link>
-          </>
-        ) : (
-          <>
-            Have an account?{' '}
-            <Link onClick={() => setAction('logIn')}>Log In</Link>
-          </>
-        )}
-      </StateChanger>
+      {action !== 'confirm' && (
+        <StateChanger>
+          {action === 'logIn' ? (
+            <>
+              Don't have an account?{' '}
+              <Link onClick={() => setAction('signUp')}>Sign Up</Link>
+            </>
+          ) : (
+            <>
+              Have an account?{' '}
+              <Link onClick={() => setAction('logIn')}>Log In</Link>
+            </>
+          )}
+        </StateChanger>
+      )}
     </Wrapper>
   );
 };
