@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const Container = styled.input`
+export const Container = styled.input`
   border: 0;
   border: ${props => props.theme.boxBorder};
   border-radius: ${props => props.theme.borderRadius};
@@ -12,7 +12,7 @@ const Container = styled.input`
   padding: 0px 15px;
 `;
 
-const Input = ({
+export const Input = ({
   placeholder,
   required = true,
   value,
@@ -35,5 +35,3 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string
 };
-
-export default Input;

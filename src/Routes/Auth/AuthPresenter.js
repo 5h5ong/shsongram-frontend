@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Input from '../../Components/Input';
+import { Input } from '../../Components/Input';
 import Button from '../../Components/Button';
 
 const Wrapper = styled.div`
