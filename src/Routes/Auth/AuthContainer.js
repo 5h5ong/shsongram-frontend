@@ -9,20 +9,14 @@ export default () => {
   const [action, setAction] = useState('logIn');
   const firstName = useInput('');
   const lastName = useInput('');
-  const email = useInput('call5h5ong@gmail.com');
-  const username = useInput('call5h5ong');
+  const email = useInput('');
+  const username = useInput('');
   const password = useInput('');
-  const [requestSecret] = useMutation(LOGIN, {
-    variables: { email: email.value },
-    update: (_, { data }) => {
-      const { requestSecret } = data;
-      if (!requestSecret) {
-        toast.error('해당 계정이 존재하지 않습니다. 새로 만드세요!');
-        setTimeout(() => setAction('SignUp'), 3000);
-      }
-    }
+  const secret = useInput('');
+  const [requestSecretMutation] = useMutation(LOGIN, {
+    variables: { email: email.value }
   });
-  const [createAccount] = useMutation(CREATE_ACCOUNT, {
+  const [createAccountMutation] = useMutation(CREATE_ACCOUNT, {
     variables: {
       username: username.value,
       email: email.value,
@@ -35,9 +29,26 @@ export default () => {
     e.preventDefault();
     if (action === 'logIn') {
       if (email.value !== '') {
-        requestSecret();
+        try {
+          const {
+            data: { requestSecret }
+          } = await requestSecretMutation();
+          if (!requestSecret) {
+            toast.error(
+              '해당 계정은 존재하지 않습니다. 새로운 계정을 만들어보세요!'
+            );
+            setTimeout(() => setAction('signUp'), 3000);
+          } else {
+            toast.success(
+              'secret key가 해당 메일로 전송되었습니다. 확인해보세요!'
+            );
+            setAction('confirm');
+          }
+        } catch {
+          toast.error('요청이 실패하였습니다. 다시 시도해주세요.');
+        }
       }
-    } else if (action === 'SignUp') {
+    } else if (action === 'signUp') {
       if (
         email.value !== '' &&
         username.value !== '' &&
@@ -45,7 +56,15 @@ export default () => {
         lastName !== ''
       ) {
         try {
-          await createAccount();
+          const {
+            data: { createAccount }
+          } = await createAccountMutation();
+          if (!createAccount) {
+            toast.error('계정을 만들 수 없습니다.');
+          } else {
+            toast.success('계정 생성을 완료했습니다. 로그인 하세요!');
+            setTimeout(() => setAction('logIn'), 3000);
+          }
         } catch (e) {
           toast.error(e.message);
         }
@@ -60,6 +79,7 @@ export default () => {
       email={email}
       username={username}
       password={password}
+      secret={secret}
       action={action}
       setAction={setAction}
       onSubmit={onSubmit}

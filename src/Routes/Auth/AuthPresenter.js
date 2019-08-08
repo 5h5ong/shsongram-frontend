@@ -48,6 +48,7 @@ export default ({
   email,
   username,
   password,
+  secret,
   action,
   setAction,
   onSubmit
@@ -56,13 +57,14 @@ export default ({
   return (
     <Wrapper>
       <Form>
-        {action === 'logIn' ? (
+        {action === 'logIn' && (
           <form onSubmit={onSubmit}>
             <Input placeholder={'email'} {...email} type='email' />
             {/* <Input placeholder={'Password'} {...password} type='password' /> */}
             <Button text={'Log In'} />
           </form>
-        ) : (
+        )}
+        {action === 'signUp' && (
           <form onSubmit={onSubmit}>
             <Input placeholder={'First name'} {...firstName} required={false} />
             <Input placeholder={'Last name'} {...lastName} required={false} />
@@ -72,12 +74,21 @@ export default ({
             <Button text={'Sign Up'} />
           </form>
         )}
+        {action === 'confirm' && (
+          <form onSubmit={onSubmit}>
+            <Input
+              placeholder={'secret key를 적어주세요'}
+              required
+              {...secret}
+            />
+          </form>
+        )}
       </Form>
       <StateChanger>
         {action === 'logIn' ? (
           <>
             Don't have an account?{' '}
-            <Link onClick={() => setAction('SignUp')}>Sign Up</Link>
+            <Link onClick={() => setAction('signUp')}>Sign Up</Link>
           </>
         ) : (
           <>
