@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { gql } from 'apollo-boost';
+import { useQuery } from 'react-apollo-hooks';
 import { HeartEmpty, Compass, User, Logo } from './Icons';
 import useInput from '../Hooks/useInput';
 import { Container as inputContainer } from './Input';
@@ -11,7 +13,7 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
   border: 0;
-  /* position: absolute; */
+  position: fixed;
   top: 0;
   left: 0;
   background-color: white;
@@ -55,8 +57,22 @@ const SearchInput = styled(inputContainer)`
   }
 `;
 
-export default () => {
+const ME = gql`
+  {
+    me {
+      username
+    }
+  }
+`;
+
+export default withRouter(({ history }) => {
   const search = useInput('');
+  const { data, loading } = useQuery(ME);
+  const onSearchSubmit = e => {
+    e.preventDefault();
+    history.push(`/search?term=${search.value}`);
+  };
+
   return (
     <Header>
       <HeaderWrapper>
@@ -66,7 +82,7 @@ export default () => {
           </Link>
         </HeaderColumn>
         <HeaderColumn>
-          <form>
+          <form onSubmit={onSearchSubmit}>
             <SearchInput {...search} placeholder='Search' />
           </form>
         </HeaderColumn>
@@ -77,11 +93,18 @@ export default () => {
           <HeaderLink to='/notifications'>
             <HeartEmpty />
           </HeaderLink>
-          <HeaderLink to='/username'>
-            <User />
-          </HeaderLink>
+          {loading && (
+            <HeaderLink to='/#'>
+              <User />
+            </HeaderLink>
+          )}
+          {!loading && data.me && (
+            <HeaderLink to={data.me.username}>
+              <User />
+            </HeaderLink>
+          )}
         </HeaderColumn>
       </HeaderWrapper>
     </Header>
   );
-};
+});
