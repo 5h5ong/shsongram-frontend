@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Input } from '../../Components/Input';
 import Button from '../../Components/Button';
@@ -58,31 +59,50 @@ export default ({
     <Wrapper>
       <Form>
         {action === 'logIn' && (
-          <form onSubmit={onSubmit}>
-            <Input placeholder={'email'} {...email} type='email' />
-            {/* <Input placeholder={'Password'} {...password} type='password' /> */}
-            <Button text={'Log In'} />
-          </form>
+          <>
+            <Helmet>
+              <title>Log In | Shsongram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input placeholder={'email'} {...email} type='email' />
+              {/* <Input placeholder={'Password'} {...password} type='password' /> */}
+              <Button text={'Log In'} />
+            </form>
+          </>
         )}
         {action === 'signUp' && (
-          <form onSubmit={onSubmit}>
-            <Input placeholder={'First name'} {...firstName} required={false} />
-            <Input placeholder={'Last name'} {...lastName} required={false} />
-            <Input placeholder={'Email'} {...email} type='email' />
-            <Input placeholder={'Username'} {...username} />
-            {/* <Input placeholder={'Password'} {...password} type='password' /> */}
-            <Button text={'Sign Up'} />
-          </form>
+          <>
+            <Helmet>
+              <title>Sign Up | Shsongram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input
+                placeholder={'First name'}
+                {...firstName}
+                required={false}
+              />
+              <Input placeholder={'Last name'} {...lastName} required={false} />
+              <Input placeholder={'Email'} {...email} type='email' />
+              <Input placeholder={'Username'} {...username} />
+              {/* <Input placeholder={'Password'} {...password} type='password' /> */}
+              <Button text={'Sign Up'} />
+            </form>
+          </>
         )}
         {action === 'confirm' && (
-          <form onSubmit={onSubmit}>
-            <Input
-              placeholder={'secret key를 적어주세요'}
-              required
-              {...secret}
-            />
-            <Button text={'Confirm'} />
-          </form>
+          <>
+            <Helmet>
+              <title>Confirm | Shsongram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input
+                placeholder={'secret key를 적어주세요'}
+                required
+                {...secret}
+              />
+              <Button text={'Confirm'} />
+            </form>
+          </>
         )}
       </Form>
       {action !== 'confirm' && (

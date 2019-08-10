@@ -86,6 +86,7 @@ export default () => {
           } = await confirmSecretMutation();
           if (token !== '' && token !== undefined) {
             localLogInMutation({ variables: { token } });
+            // TO DO: redirect root page.
           } else {
             throw Error();
           }

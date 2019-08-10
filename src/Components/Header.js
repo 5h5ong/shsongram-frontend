@@ -20,6 +20,7 @@ const Header = styled.header`
   border-bottom: ${props => props.theme.boxBorder};
   border-radius: 0px;
   padding: 25px 0px;
+  z-index: 2;
 `;
 const HeaderWrapper = styled.div`
   display: flex;
