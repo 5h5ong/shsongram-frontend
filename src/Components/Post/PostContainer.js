@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo-hooks';
+import { toast } from 'react-toastify';
 import PostPresenter from './PostPresenter';
 import useInput from '../../Hooks/useInput';
 import { ADD_COMMENT, TOGGLE_LIKE } from './PostQueries';
@@ -19,6 +20,7 @@ const PostContainer = ({
   const [isLikedS, setIsLiked] = useState(isLiked);
   const [likeCountS, setLikeCount] = useState(likeCount);
   const [currentItemS, setCurrentItem] = useState(0);
+  const [selfCommentsS, setSelfComment] = useState(comments);
   const comment = useInput('');
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
     variables: { postId: id }
@@ -48,15 +50,26 @@ const PostContainer = ({
       setLikeCount(likeCountS + 1);
     }
   };
-  const onKeyPress = e => {
-    const { keyCode } = e;
+  const onKeyPress = async e => {
+    const { which: keyCode } = e;
     if (keyCode === 13) {
-      if (comment.value !== '\n') {
-        console.log('comment.value is not null!');
-        comment.setValue('');
-        addCommentMutation();
+      e.preventDefault();
+      if (comment.value !== '') {
+        try {
+          const {
+            data: { addComment }
+          } = await addCommentMutation();
+          setSelfComment([...selfCommentsS, addComment]);
+          comment.setValue('');
+        } catch {
+          toast.error(
+            '댓글을 입력하는 데 실패했습니다. 잠시 후 다시 시도해주세요 ㅠㅜ'
+          );
+        }
+        toast.success('댓글을 입력하는데 성공하였습니다!');
       } else {
         comment.setValue('');
+        toast.error('공백 입력은 불가능합니다.');
       }
       return;
     }
@@ -77,6 +90,7 @@ const PostContainer = ({
       toggleLike={toggleLike}
       onKeyPress={onKeyPress}
       comments={comments}
+      selfComments={selfCommentsS}
     />
   );
 };

@@ -6,6 +6,7 @@ import { useQuery } from 'react-apollo-hooks';
 import { HeartEmpty, Compass, User, Logo } from './Icons';
 import useInput from '../Hooks/useInput';
 import { Container as inputContainer } from './Input';
+import { ME } from '../SharedQueries';
 
 const Header = styled.header`
   width: 100%;
@@ -55,14 +56,6 @@ const SearchInput = styled(inputContainer)`
   &::placeholder {
     opacity: 0.8;
     font-weight: 200;
-  }
-`;
-
-const ME = gql`
-  {
-    me {
-      username
-    }
   }
 `;
 

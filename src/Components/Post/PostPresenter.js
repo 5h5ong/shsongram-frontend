@@ -102,7 +102,8 @@ export default ({
   currentItem,
   toggleLike,
   onKeyPress,
-  comments
+  comments,
+  selfComments
 }) => {
   return (
     <Post>
@@ -131,7 +132,7 @@ export default ({
         <FatText text={likeCount === 1 ? '1 like' : `${likeCount} likes`} />
         {
           <Comments>
-            {comments.map(comment => (
+            {selfComments.map(comment => (
               <Comment key={comment.id}>
                 <FatText text={comment.user.username} />
                 {comment.text}
@@ -142,7 +143,7 @@ export default ({
         <Timestamp>{createdAt}</Timestamp>
         <Textarea
           placeholder={'당신의 이야기를 적어보세요...'}
-          onKeyUp={onKeyPress}
+          onKeyPress={onKeyPress}
           value={newComment.value}
           onChange={newComment.onChange}
         />
