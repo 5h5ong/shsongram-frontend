@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import { HeartEmpty, Compass, User, Logo } from './Icons';
 import useInput from '../Hooks/useInput';
@@ -16,7 +15,7 @@ const Header = styled.header`
   border: 0;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 0
   background-color: white;
   border-bottom: ${props => props.theme.boxBorder};
   border-radius: 0px;
