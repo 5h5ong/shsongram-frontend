@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Avatar from './Avatar';
 import FatText from './FatText';
-import Button from './Button';
+import FollowButton from './FollowButton';
 import { Link } from 'react-router-dom';
 
 const Card = styled.div`
@@ -23,19 +23,20 @@ const ELink = styled(Link)`
   margin-bottom: 15px;
 `;
 
-const UserCard = ({ username, isFollowing, url, isSelf }) => {
+const UserCard = ({ id, username, isFollowing, url, isSelf }) => {
   return (
     <Card>
       <EAvatar url={url} size={'md'} />
       <ELink to={`/${username}`}>
         <FatText text={username} />
       </ELink>
-      {!isSelf && <Button text={isFollowing ? 'Unfollow' : 'Follow'} />}
+      {!isSelf && <FollowButton isFollowing={isFollowing} id={id} />}
     </Card>
   );
 };
 
 UserCard.propTypes = {
+  id: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   url: PropTypes.string.isRequired,
