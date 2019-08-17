@@ -59,6 +59,6 @@ export const SquarePost = ({ likeCount, commentCount, file }) => {
 SquarePost.propTypes = {
   likeCount: PropTypes.number.isRequired,
   commentCount: PropTypes.number.isRequired,
-  file: PropTypes.string.isRequired
+  file: PropTypes.object.isRequired
 };
 export default SquarePost;
