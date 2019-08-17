@@ -90,6 +90,7 @@ const PostContainer = ({
       toggleLike={toggleLike}
       onKeyPress={onKeyPress}
       comments={comments}
+      caption={caption}
       selfComments={selfCommentsS}
     />
   );

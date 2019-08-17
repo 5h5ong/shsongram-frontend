@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea';
+import { Link } from 'react-router-dom';
 import { HeartFull, HeartEmpty, Comment as CommentIcon } from '../Icons';
 import FatText from '../FatText';
 import Avatar from '../Avatar';
@@ -10,6 +11,9 @@ const Post = styled.div`
   width: 100%;
   max-width: 600px;
   margin-bottom: 25px;
+  a {
+    color: inherit;
+  }
 `;
 const Header = styled.header`
   display: flex;
@@ -35,7 +39,7 @@ const Files = styled.div`
 const File = styled.div`
   max-width: 100%;
   width: 100%;
-  height: 600px;
+  height: 100%;
   position: absolute;
   top: 0;
   background-image: url(${props => props.src});
@@ -87,6 +91,9 @@ const Comment = styled.li`
     margin-right: 5px;
   }
 `;
+const Caption = styled.div`
+  margin: 10px 0px;
+`;
 
 export default ({
   user: { avatar, username },
@@ -110,7 +117,9 @@ export default ({
       <Header>
         <Avatar size='sm' url={avatar} />
         <UserColumn>
-          <FatText text={username} />
+          <Link to={`/${username}`}>
+            <FatText text={username} />
+          </Link>
           <Location>{location}</Location>
         </UserColumn>
       </Header>
@@ -130,6 +139,9 @@ export default ({
           </Button>
         </Buttons>
         <FatText text={likeCount === 1 ? '1 like' : `${likeCount} likes`} />
+        <Caption>
+          <FatText text={username} /> {caption}
+        </Caption>
         {
           <Comments>
             {selfComments.map(comment => (
