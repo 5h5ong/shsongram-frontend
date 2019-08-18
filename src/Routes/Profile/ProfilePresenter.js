@@ -77,6 +77,9 @@ export default ({ loading, data }) => {
     return (
       <Wrapper>
         <Header>
+          <Helmat>
+            <title>5h5ongram | {username}</title>
+          </Helmat>
           <HeaderColumn>
             <Avatar url={avatar} size='lg' />
           </HeaderColumn>
