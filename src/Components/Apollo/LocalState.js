@@ -11,7 +11,6 @@ export const resolvers = {
           isLoggedIn: true
         }
       });
-      window.location.reload();
       return null;
     },
     logUserOut: (_, __, { cache }) => {

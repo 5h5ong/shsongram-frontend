@@ -87,6 +87,7 @@ export default () => {
           if (token !== '' && token !== undefined) {
             localLogInMutation({ variables: { token } });
             // TO DO: redirect root page.
+            window.location.reload();
           } else {
             throw Error();
           }
