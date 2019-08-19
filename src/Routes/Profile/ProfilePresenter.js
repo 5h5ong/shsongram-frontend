@@ -52,7 +52,6 @@ const Posts = styled.div`
 `;
 
 export default ({ loading, data, logout }) => {
-  console.log(loading, data);
   if (loading) {
     return (
       <Wrapper>
