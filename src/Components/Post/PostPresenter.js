@@ -126,7 +126,12 @@ export default ({
       <Files>
         {files &&
           files.map((file, index) => (
-            <File id={file.id} src={file.url} showing={index === currentItem} />
+            <File
+              key={file.id}
+              id={file.id}
+              src={file.url}
+              showing={index === currentItem}
+            />
           ))}
       </Files>
       <Meta>
