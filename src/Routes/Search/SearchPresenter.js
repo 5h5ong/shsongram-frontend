@@ -14,8 +14,8 @@ const Section = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 160px);
   grid-gap: 25px;
-  grid-template-rows: 160px;
-  grid-auto-rows: 160px;
+  grid-template-rows: 170px;
+  grid-auto-rows: 170px;
 `;
 const PostSection = styled(Section)`
   grid-template-columns: repeat(4, 200px);
