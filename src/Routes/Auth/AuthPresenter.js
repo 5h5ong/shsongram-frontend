@@ -54,7 +54,6 @@ export default ({
   setAction,
   onSubmit
 }) => {
-  console.log({ ...firstName });
   return (
     <Wrapper>
       <Form>
